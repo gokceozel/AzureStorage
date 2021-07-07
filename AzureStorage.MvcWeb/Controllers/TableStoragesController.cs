@@ -17,6 +17,7 @@ namespace AzureStorage.MvcWeb.Controllers
         }
         public IActionResult Index()
         {
+            var test = _noSqlStorage.GetAll().ToList();
             return View();
         }
     }
