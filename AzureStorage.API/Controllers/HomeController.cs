@@ -73,5 +73,17 @@ namespace AzureStorage.API.Controllers
             else
                 return BadRequest("Update was unsuccess");
          }
+
+        [HttpPost("delete")]
+        public async Task<IActionResult> DeleteProduct(string rowKey,string partitionKey)
+        {
+            if (! string.IsNullOrEmpty(rowKey)&&  !string.IsNullOrEmpty(partitionKey))
+            {
+                 await  _noSqlStorage.Delete(rowKey,partitionKey);
+                 return Ok();
+            }
+            else
+                return BadRequest();
+        }
     }
 }

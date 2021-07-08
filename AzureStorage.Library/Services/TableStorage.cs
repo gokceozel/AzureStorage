@@ -43,7 +43,7 @@ namespace AzureStorage.Library.Services
         }
         public async Task Delete(string rowKey, string partitionKey)
         {
-            var entity = await Get(rowKey, partitionKey);
+            var entity = Get(rowKey, partitionKey);
             var operation = TableOperation.Delete(entity);
             await _cloudTable.ExecuteAsync(operation);
         }
