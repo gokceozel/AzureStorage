@@ -85,5 +85,11 @@ namespace AzureStorage.API.Controllers
             else
                 return BadRequest();
         }
+        [HttpGet("getprice")]
+        public IActionResult GetPrice(int price)
+        {
+            var model = _noSqlStorage.Query(x => x.Price > price).ToList();
+            return Ok(model);
+       }
     }
 }
