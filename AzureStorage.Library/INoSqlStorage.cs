@@ -8,7 +8,7 @@ namespace AzureStorage.Library
     public interface INoSqlStorage<TEntity>
     {
         Task<TEntity> Add(TEntity entity);
-        Task<TEntity> Get(string rowKey, string partitionKey);
+        TEntity Get(string rowKey, string partitionKey);
         Task Delete(string rowKey, string partitionKey);
         Task<TEntity> Update(TEntity entity);
         IQueryable<TEntity> GetAll();

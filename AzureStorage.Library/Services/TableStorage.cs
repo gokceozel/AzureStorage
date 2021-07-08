@@ -21,10 +21,10 @@ namespace AzureStorage.Library.Services
                
         }
 
-        public async Task<TEntity> Get(string rowKey, string partitionKey)
+        public TEntity Get(string rowKey, string partitionKey)
         {
             var operation = TableOperation.Retrieve<TEntity>(rowKey,partitionKey);
-            var execute = await _cloudTable.ExecuteAsync(operation);
+            var execute =  _cloudTable.ExecuteAsync(operation);
             return execute.Result as TEntity;
         }
         public IQueryable<TEntity> GetAll()

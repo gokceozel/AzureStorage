@@ -2,9 +2,11 @@
 using AzureStorage.Library.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Azure.Cosmos.Table;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace AzureStorage.API.Controllers
@@ -45,6 +47,31 @@ namespace AzureStorage.API.Controllers
             }
             
         }
+        [HttpPost("edit")]
+        public async Task<IActionResult> UpdateProduct(string rowKey,string partitionKey,Product model)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var updateModel = _noSqlStorage.Get(rowKey, partitionKey);
+                    await _noSqlStorage.Update(updateModel);
+                    return Ok();
 
+                }
+                catch (StorageException ex)
+                {
+                    if (ex.RequestInformation.HttpStatusCode == (int)HttpStatusCode.PreconditionFailed)
+                    { 
+                        string msj = "Pls refresh page";
+                        return BadRequest(msj);
+                    }
+                    return BadRequest(ex.Message);
+                }
+             
+            }
+            else
+                return BadRequest("Update was unsuccess");
+         }
     }
 }
