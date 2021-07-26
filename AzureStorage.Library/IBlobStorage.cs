@@ -6,12 +6,12 @@ namespace AzureStorage.Library
 {
     public  interface IBlobStorage
     {
-        public string BlobUrl { get; set; }
-        Task UploadAsync(Stream fileStream, string name, EContainerName eContainerName);
+        public string BlobUrl { get; }
+        Task UploadAsync(Stream fileStream, string fileName, EContainerName eContainerName);
         Task<Stream> DowloadAsync(string fileName, EContainerName eContainerName);
-        Task DeleteAsync(string fileName);
-        Task SetLogAsync(string text, string fileName);
-        Task<List<string>> GetLogAsync(string text, string fileName);
+        Task DeleteAsync(string blobName, EContainerName eContainerName);
+        Task SetLogAsync(string text, string blobName);
+        Task<List<string>> GetLogAsync(string text, string blobName);
         List<string> GetNames(EContainerName eContainerName);
     }
     public enum EContainerName
