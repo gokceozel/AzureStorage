@@ -3,7 +3,6 @@ using AzureStorage.MvcWebApp.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -19,6 +18,7 @@ namespace AzureStorage.MvcWebApp.Controllers
         {
             _blobStorage = blobStorage;
         }
+
         public IActionResult Index()
         {
             var names = _blobStorage.GetNames(EContainerName.pictures);
@@ -40,6 +40,13 @@ namespace AzureStorage.MvcWebApp.Controllers
         {
             var stream = await _blobStorage.DowloadAsync(fileName, EContainerName.pictures);
             return File(stream, "application/octet-stream", fileName);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(string fileName)
+        {
+            await _blobStorage.DeleteAsync(fileName, EContainerName.pictures);
+            return RedirectToAction("Index");
         }
     }
 }
