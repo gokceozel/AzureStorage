@@ -11,7 +11,7 @@ namespace AzureStorage.Library
         Task<Stream> DowloadAsync(string fileName, EContainerName eContainerName);
         Task DeleteAsync(string blobName, EContainerName eContainerName);
         Task SetLogAsync(string text, string blobName);
-        Task<List<string>> GetLogAsync(string text, string blobName);
+        Task<List<string>> GetLogAsync(string fileName);
         List<string> GetNames(EContainerName eContainerName);
     }
     public enum EContainerName

@@ -35,11 +35,12 @@ namespace AzureStorage.Library.Services
             return info.Value.Content;
         }
 
-        public async Task<List<string>> GetLogAsync(string text, string blobName)
+        public async Task<List<string>> GetLogAsync(string fileName)
         {
             List<string> logs = new List<string>();
             var containerClient = _blobServiceClient.GetBlobContainerClient(EContainerName.logs.ToString());
-            var appendBlobClient = containerClient.GetAppendBlobClient(blobName);
+            await containerClient.CreateIfNotExistsAsync();
+            var appendBlobClient = containerClient.GetAppendBlobClient(fileName);
             await appendBlobClient.CreateIfNotExistsAsync();
             var info = await appendBlobClient.DownloadAsync();
 
