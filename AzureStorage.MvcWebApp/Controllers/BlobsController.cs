@@ -19,8 +19,8 @@ namespace AzureStorage.MvcWebApp.Controllers
         }
         public IActionResult Index()
         {
-            var names = _blobStorage.GetNames(EContainerName.Picture);
-            string blobUrl = $"{_blobStorage.BlobUrl}/{EContainerName.Picture.ToString()}";
+            var names = _blobStorage.GetNames(EContainerName.pictures);
+            string blobUrl = $"{_blobStorage.BlobUrl}/{EContainerName.pictures.ToString()}";
             ViewBag.blobs = names.Select(x => new FileBlob { Name = x, Url = $"{blobUrl}/x" }).ToList();
            return View();
         }

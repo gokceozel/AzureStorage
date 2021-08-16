@@ -16,8 +16,8 @@ namespace AzureStorage.Library
     }
     public enum EContainerName
     {
-        Picture,
-        Pdf,
-        Logs
+        pictures,
+        pdf,
+        logs
     }
 }
