@@ -1,8 +1,10 @@
 ﻿using AzureStorage.Library;
 using AzureStorage.MvcWebApp.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -21,8 +23,17 @@ namespace AzureStorage.MvcWebApp.Controllers
         {
             var names = _blobStorage.GetNames(EContainerName.pictures);
             string blobUrl = $"{_blobStorage.BlobUrl}/{EContainerName.pictures.ToString()}";
-            ViewBag.blobs = names.Select(x => new FileBlob { Name = x, Url = $"{blobUrl}/x" }).ToList();
+            ViewBag.blobs = names.Select(x => new FileBlob { Name = x, Url = $"{blobUrl}/{x}" }).ToList();
            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Upload(IFormFile picture)
+        {
+            var t = Path.GetExtension(picture.FileName);
+            var newFileName = Guid.NewGuid().ToString() + Path.GetExtension(picture.FileName);
+            await _blobStorage.UploadAsync(picture.OpenReadStream(),newFileName,EContainerName.pictures);
+            return RedirectToAction("Index");
         }
     }
 }
