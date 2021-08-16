@@ -17,7 +17,8 @@ namespace AzureStorage.Library.Services
             _blobServiceClient = new BlobServiceClient(ConnectionStrings.AzureStorageConnectionString);
         }
 
-        public string BlobUrl => "";
+        public string BlobUrl => "https://introaccountex.blob.core.windows.net";
+  
 
         public async Task DeleteAsync(string fileName, EContainerName eContainerName)
         {
