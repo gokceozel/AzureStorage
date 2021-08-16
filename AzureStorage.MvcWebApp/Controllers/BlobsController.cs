@@ -30,10 +30,16 @@ namespace AzureStorage.MvcWebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> Upload(IFormFile picture)
         {
-            var t = Path.GetExtension(picture.FileName);
             var newFileName = Guid.NewGuid().ToString() + Path.GetExtension(picture.FileName);
             await _blobStorage.UploadAsync(picture.OpenReadStream(),newFileName,EContainerName.pictures);
             return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Download(string fileName)
+        {
+            var stream = await _blobStorage.DowloadAsync(fileName, EContainerName.pictures);
+            return File(stream, "application/octet-stream", fileName);
         }
     }
 }
